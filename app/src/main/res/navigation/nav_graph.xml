@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/pairedFragment">
+
+    <fragment
+        android:id="@+id/scanFragment"
+        android:name="com.example.bluetooth.ui.ScanFragment"
+        android:label="ScanFragment" />
+    <fragment
+        android:id="@+id/pairedFragment"
+        android:name="com.example.bluetooth.ui.PairedFragment"
+        android:label="PairedFragment" />
+</navigation>
