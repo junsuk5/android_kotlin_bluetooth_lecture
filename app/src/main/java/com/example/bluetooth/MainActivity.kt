@@ -22,13 +22,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
 
-    private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
     private val requestPermission = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
     ) { result ->
         if (result) {
             Toast.makeText(this, "권한 성공", Toast.LENGTH_SHORT).show()
-            bluetoothAdapter?.startDiscovery()
+            viewModel.startDiscovery()
         } else {
             Toast.makeText(this, "권한 실패", Toast.LENGTH_SHORT).show()
         }
@@ -52,26 +51,16 @@ class MainActivity : AppCompatActivity() {
 
         requestPermission.launch(Manifest.permission.ACCESS_FINE_LOCATION)
 
+//        if (bluetoothAdapter == null) {
+//            // Device doesn't support Bluetooth
+//        }
+//
+//        if (bluetoothAdapter?.isEnabled == false) {
+//            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+//            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
+//        }
 
-        if (bluetoothAdapter == null) {
-            // Device doesn't support Bluetooth
-        }
-
-        if (bluetoothAdapter?.isEnabled == false) {
-            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
-        }
-
-        // 연결된 기기 정보
-        val pairedDevices: Set<BluetoothDevice>? = bluetoothAdapter?.bondedDevices
-        pairedDevices?.forEach { device ->
-            val deviceName = device.name
-            val deviceHardwareAddress = device.address // MAC address
-
-            Log.d(TAG, "onCreate: $deviceName $deviceHardwareAddress")
-
-            viewModel.addDiscoverDevice(device)
-        }
+        viewModel.fetchPairedDevices()
 
         // Register for broadcasts when a device is discovered.
         val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
@@ -93,6 +82,7 @@ class MainActivity : AppCompatActivity() {
                         val deviceHardwareAddress = device.address // MAC address
 
                         Log.d(TAG, "onReceive: $deviceName $deviceHardwareAddress")
+                        viewModel.addScanDevice(device)
                     }
                     else -> Log.d(TAG, "onReceive: else")
                 }
