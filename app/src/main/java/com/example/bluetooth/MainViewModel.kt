@@ -2,12 +2,15 @@ package com.example.bluetooth
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothSocket
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.util.*
 
 class MainViewModel : ViewModel() {
     private val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
+    private val myUUID = UUID.randomUUID()
 
     private val pairedDevices = arrayListOf<BluetoothDevice>()
     private val scanDevices = arrayListOf<BluetoothDevice>()
@@ -44,4 +47,17 @@ class MainViewModel : ViewModel() {
         scanDevicesLiveData.value = scanDevices
     }
 
+    fun connect(device: BluetoothDevice) {
+        val socket: BluetoothSocket? by lazy(LazyThreadSafetyMode.NONE) {
+            device.createRfcommSocketToServiceRecord(myUUID)
+        }
+
+        bluetoothAdapter?.cancelDiscovery()
+
+        socket?.use { socket ->
+            socket.connect()
+
+
+        }
+    }
 }

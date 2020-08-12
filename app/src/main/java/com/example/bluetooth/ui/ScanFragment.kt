@@ -20,7 +20,7 @@ class ScanFragment : Fragment(R.layout.fragment_scan) {
         binding = FragmentScanBinding.bind(view)
 
         val adapter = DeviceAdapter {
-
+            mainViewModel.connect(it)
         }
         binding.recyclerView.adapter = adapter
 
