@@ -5,10 +5,10 @@
 
     <fragment
         android:id="@+id/scanFragment"
-        android:name="com.example.bluetooth.ui.ScanFragment"
+        android:name="com.example.bluetooth.ui.main.ScanFragment"
         android:label="ScanFragment" />
     <fragment
         android:id="@+id/pairedFragment"
-        android:name="com.example.bluetooth.ui.PairedFragment"
+        android:name="com.example.bluetooth.ui.main.PairedFragment"
         android:label="PairedFragment" />
 </navigation>

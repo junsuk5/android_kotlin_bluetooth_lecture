@@ -1,7 +1,6 @@
 package com.example.bluetooth
 
 import android.Manifest
-import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -13,10 +12,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -27,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     ) { result ->
         if (result) {
             Toast.makeText(this, "권한 성공", Toast.LENGTH_SHORT).show()
-            viewModel.startDiscovery()
+            viewModel.leScan()
         } else {
             Toast.makeText(this, "권한 실패", Toast.LENGTH_SHORT).show()
         }

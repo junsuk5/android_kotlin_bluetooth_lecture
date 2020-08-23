@@ -1,13 +1,13 @@
-package com.example.bluetooth.ui
+package com.example.bluetooth.ui.main
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.example.bluetooth.MainViewModel
 import com.example.bluetooth.R
 import com.example.bluetooth.databinding.FragmentPairedBinding
+import com.example.bluetooth.ui.main.DeviceAdapter
 
 class PairedFragment : Fragment(R.layout.fragment_paired) {
     private val mainViewModel by activityViewModels<MainViewModel>()
@@ -24,9 +24,9 @@ class PairedFragment : Fragment(R.layout.fragment_paired) {
         }
         binding.recyclerView.adapter = adapter
 
-        mainViewModel.pairedDevicesLiveData.observe(viewLifecycleOwner, Observer {
+        mainViewModel.pairedDevicesLiveData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
-        })
+        }
     }
 }
 
