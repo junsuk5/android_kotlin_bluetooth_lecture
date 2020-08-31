@@ -115,6 +115,12 @@ class DetailActivity : AppCompatActivity() {
                     // Show all the supported services and characteristics on the
                     // user interface.
 //                    displayGattServices(bluetoothLeService.supportedGattServices)
+                    mBluetoothLeService?.supportedGattServices?.forEach { service ->
+                        service.characteristics.forEach { characteristic ->
+                            Log.d(TAG, "characteristics: ${characteristic.uuid}")
+                            Log.d(TAG, "characteristics: ${SampleGattAttributes.lookup(characteristic.uuid.toString(), "unknown")}")
+                        }
+                    }
                 }
                 ACTION_DATA_AVAILABLE -> {
                     Log.d(TAG, "onReceive: ACTION_DATA_AVAILABLE")
